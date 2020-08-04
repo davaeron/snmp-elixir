@@ -30,7 +30,6 @@ defmodule SNMP.Mixfile do
   def application do
     [ extra_applications: [
         :logger,
-        :snmp,
       ],
       env: [
         timeout: 5000,
@@ -43,7 +42,6 @@ defmodule SNMP.Mixfile do
           "/usr/share/snmp/mibs",
         ],
       ],
-      mod: {SNMP, []},
     ]
   end
 
