@@ -835,6 +835,33 @@ defmodule SNMP do
     |> Stream.drop(1)
   end
 
+
+
+  @doc """
+  Perform an SNMP table using WALK.
+
+  This function returns a stream, which ensures that the
+  resulting table is bounded.
+
+  ## Example
+
+      iex> %{uri: URI.parse("snmp://an-snmp-host.local"),
+      ...>   credential: v3_cred,
+      ...>   varbinds: [%{oid: "ipAddrTable"}],
+      ...> } |> SNMP.table
+      ...> |> Enum.take(1)
+      [ %{oid: [1, 3, 6, 1, 2, 1, 4, 20, 1, 1, 192, 0, 2, 1],
+          type: :IpAddress,
+          value: [192, 0, 2, 1],
+        }
+      ]
+  """
+  @spec table(req_params, req_options)
+    :: Enumerable.t
+  def table(req, options \\ []) do
+      walk(req, options)
+  end
+
   @type mib_name :: String.t()
 
   @spec load_mib(mib_name)
