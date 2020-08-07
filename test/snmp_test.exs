@@ -14,6 +14,13 @@ defmodule SNMP.Test do
     value: "test-52567"
   }
 
+  @table_oid "ipAddrTable"
+  @table_oid_result %{
+    oid: @sysname_oid,
+    type: :"OCTET STRING",
+    value: "test-52567"
+  }
+
   # Presumably working agent, but has frequent troubles
   @working_agent "demo.snmplabs.com:1161"
 
@@ -287,46 +294,10 @@ defmodule SNMP.Test do
           version: :v2,
           community: "public"
         }),
-      varbinds: [%{oid: "ipAddrTable"}]
+      varbinds: [%{oid: @table_oid}]
     }
+    result = SNMP.table(req)
 
-    {:ok, [oid]} = :snmpm.name_to_oid(:ipAddrTable)
-    # IO.inspect(oid)
-
-    # outs = :ets.lookup(:snmpm_mib_table, {:mini_mib, oid})
-    # IO.inspect(outs)
-
-    ets_key_stream =                                  # helper Stream to parse OTP ETS
-      &Stream.resource(
-        fn -> :ets.first(&1) end,
-        fn
-          :"$end_of_table" ->
-            {:halt, nil}
-
-          previous_key ->
-            {[previous_key], :ets.next(&1, previous_key)}
-        end,
-        fn _ -> :ok end
-      )
-
-    lookup_oid = oid ++ [1]                           # add "1" to OID, that will give us "table entry OID"
-
-    ets_key_stream.(:snmpm_mib_table)
-    |> Stream.filter(fn {_, mib_oid} ->               # filter out our OIDs from all keys in ETS :snmpm_mib_table
-      List.starts_with?(mib_oid, lookup_oid)
-    end)
-    |> Enum.reject(&(&1 == {:mini_mib, lookup_oid}))  # remove "table entry" OID from a list of keys
-    |> Enum.each(&IO.inspect(&1))
-
-    # res = SNMP.table(req)
-
-    # Enum.each(res, fn(s) -> IO.inspect(s) end)
-    # IO.puts(res)
-
-    # {:ok, [%{value: v}]} = SNMP.table(req)
-    # SNMP.table(req)
-    # |> Enum.each(fn(s) -> IO.inspect(s) end)
-
-    assert 1 == 1
+    assert result == {:ok, [@table_oid_result]}
   end
 end
