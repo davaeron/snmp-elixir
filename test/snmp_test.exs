@@ -22,7 +22,7 @@ defmodule SNMP.Test do
   }
 
   # Docker image 'davaeron/docker-snmpsim'
-  @working_agent "localhost:1024"
+  @working_agent "localhost:161"
 
   # Optimistically, should be a broken agent
   @borking_agent "localhost:65535"
