@@ -1,5 +1,7 @@
 image: elixir:latest
 
+services: davaeron/docker-snmpsim:latest
+
 variables:
   MIX_ENV: test
 
@@ -30,6 +32,6 @@ before_script:
 mix:
   script:
     - mix do deps.get, deps.compile
-    - mix test
+    - mix test --include integrated
     - mix dialyzer --halt-exit-status
 

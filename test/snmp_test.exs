@@ -21,8 +21,8 @@ defmodule SNMP.Test do
     value: "test-52567"
   }
 
-  # Presumably working agent, but has frequent troubles
-  @working_agent "demo.snmplabs.com:1161"
+  # Docker image 'davaeron/docker-snmpsim'
+  @working_agent "localhost:1024"
 
   # Optimistically, should be a broken agent
   @borking_agent "localhost:65535"
