@@ -1,10 +1,7 @@
 image: elixir:latest
 
 services:
-  - snmpsim:
-    image: davaeron/docker-snmpsim:latest
-    ports:
-      - "161:1024/udp"
+  - davaeron/docker-snmpsim
 
 variables:
   MIX_ENV: test
