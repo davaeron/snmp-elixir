@@ -1,6 +1,7 @@
 image: elixir:latest
 
-services: davaeron/docker-snmpsim:latest
+services:
+  - davaeron/docker-snmpsim:latest
 
 variables:
   MIX_ENV: test
