@@ -21,7 +21,7 @@ defmodule SNMP.Test do
     value: "test-52567"
   }
 
-  # Docker image 'davaeron/snmp-elixir-snmpsim' required for integration tests
+  # Docker image required for integration tests
   @working_agent "localhost"
 
   # Optimistically, should be a broken agent
