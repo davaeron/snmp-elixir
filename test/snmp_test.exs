@@ -1,6 +1,6 @@
 defmodule SNMP.Test do
   use ExUnit.Case, async: false
-  doctest SNMP, except: [request: 2, walk: 2]
+  doctest SNMP
 
   # For a full explanation of magic values, please see
   # http://snmplabs.com/snmpsim/public-snmp-agent-simulator.html
@@ -14,8 +14,10 @@ defmodule SNMP.Test do
     value: "test-52567"
   }
 
-  # Presumably working agent, but has frequent troubles
-  @working_agent "demo.snmplabs.com:1161"
+  # docker pull davaeron/snmpsim
+  # docker run -d -p 161:161/udp davaeron/snmpsim
+  # required for integration tests
+  @working_agent "localhost"
 
   # Optimistically, should be a broken agent
   @borking_agent "localhost:65535"

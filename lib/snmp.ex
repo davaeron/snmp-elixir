@@ -714,31 +714,31 @@ defmodule SNMP do
 
   ## Example
 
-      iex> %{uri: URI.parse("snmp://an-snmp-host.local"),
-      ...>   credential: v2_cred,
+      iex> %{uri: URI.parse("snmp://localhost"),
+      ...>   credential: SNMP.credential(%{version: :v2, community: "public"}),
       ...>   varbinds: [%{oid: [1,3,6,1,2,1,1,5,0]}],
-      ...> } |> SNMP.request
+      ...> } |> SNMP.request()
       { :ok,
         [ %{oid: [1, 3, 6, 1, 2, 1, 1, 5, 0],
             type: :"OCTET STRING",
-            value: "an-snmp-host"
+            value: "test-52567"
           }
         ]
       }
 
-      iex> %{uri: URI.parse("snmp://an-snmp-host.local"),
-      ...>   credential: v2_cred,
+      iex> %{uri: URI.parse("snmp://localhost"),
+      ...>   credential: SNMP.credential(%{version: :v2, community: "public"}),
       ...>   varbinds: [
       ...>     %{oid: [1,3,6,1,2,1,1,5,0],
       ...>       type: :s,
-      ...>       value: "new-hostname",
+      ...>       value: "test-52567",
       ...>     },
       ...>   ],
-      ...> } |> SNMP.request
+      ...> } |> SNMP.request()
       { :ok,
         [ %{oid: [1, 3, 6, 1, 2, 1, 1, 5, 0],
             type: :"OCTET STRING",
-            value: "new-hostname"
+            value: "test-52567"
           }
         ]
       }
@@ -797,10 +797,10 @@ defmodule SNMP do
 
   ## Example
 
-      iex> %{uri: URI.parse("snmp://an-snmp-host.local"),
-      ...>   credential: v3_cred,
+      iex> %{uri: URI.parse("snmp://localhost"),
+      ...>   credential: SNMP.credential(%{version: :v2, community: "public"}),
       ...>   varbinds: [%{oid: "ipAddrTable"}],
-      ...> } |> SNMP.walk
+      ...> } |> SNMP.walk()
       ...> |> Enum.take(1)
       [ %{oid: [1, 3, 6, 1, 2, 1, 4, 20, 1, 1, 192, 0, 2, 1],
           type: :IpAddress,
